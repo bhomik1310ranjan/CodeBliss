@@ -1,7 +1,7 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "../redux/app/hooks";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     Sheet,
     SheetContent,
@@ -41,6 +41,8 @@ function Header() {
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     const handleSignout = async () => {
         try {
@@ -93,10 +95,16 @@ function Header() {
                     </>
                 ) : (
                     <>
-                        <Link to="/signin">
+                        <Link
+                            to="/signin"
+                            state={{ from: location.state?.from }}
+                        >
                             <Button variant="outline">Sign in</Button>
                         </Link>
-                        <Link to="/signup">
+                        <Link
+                            to="/signup"
+                            state={{ from: location.state?.from }}
+                        >
                             <Button>Sign up</Button>
                         </Link>
                     </>
@@ -153,7 +161,12 @@ function Header() {
                                 </>
                             ) : (
                                 <>
-                                    <Link to="/signin">
+                                    <Link
+                                        to="/signin"
+                                        state={{
+                                            from: location.state?.from,
+                                        }}
+                                    >
                                         <Button
                                             variant="outline"
                                             onClick={() => setSheetOpen(false)}
@@ -162,7 +175,12 @@ function Header() {
                                             Sign in
                                         </Button>
                                     </Link>
-                                    <Link to="/signup">
+                                    <Link
+                                        to="/signup"
+                                        state={{
+                                            from: location.state?.from,
+                                        }}
+                                    >
                                         <Button
                                             onClick={() => setSheetOpen(false)}
                                             className="w-full"
